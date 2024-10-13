@@ -38,7 +38,7 @@ void TicTacToe::ShowBoard() {
       case 1:
         putc('O', stdout);
         break;
-      case 2:
+      case -2:
         putc('X', stdout);
         break;
       default:
