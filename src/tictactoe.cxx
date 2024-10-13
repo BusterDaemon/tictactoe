@@ -124,12 +124,12 @@ void TicTacToe::Run() {
     }
 
     if (winner == 0) {
-      printf("Победил %c", L'☨');
+      printf("Победил %c", 'O');
       break;
     }
 
     if (winner == 1) {
-      printf("Победил %c", L'⛧');
+      printf("Победил %c", 'X');
       break;
     }
   }
