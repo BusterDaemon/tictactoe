@@ -109,9 +109,9 @@ void TicTacToe::Run() {
     ShowBoard();
 
     while (1) {
-      printf("Введи координату по X (от 0 до %d): ", this->boardSize);
+      printf("Введи координату по X (от 0 до %d): ", this->boardSize - 1);
       fscanf(stdin, "%d", &x);
-      printf("Введи координату по Y (от 0 до %d): ", this->boardSize);
+      printf("Введи координату по Y (от 0 до %d): ", this->boardSize - 1);
       fscanf(stdin, "%d", &y);
       if (this->Move(x, y))
         break;
