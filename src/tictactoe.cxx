@@ -55,35 +55,45 @@ void TicTacToe::ShowBoard() {
 int TicTacToe::CheckWin() {
   int sum = 0;
   for (size_t i = 0; i < this->boardSize; i++) {
+    sum = 0;
     for (size_t j = 0; j < this->boardSize; j++) {
       sum += this->board[i][j];
     }
     if (sum == (this->boardSize))
       return 0;
-    if (sum == (this->boardSize * 2))
+    if (abs(sum) == (this->boardSize * 2))
       return 1;
   }
   sum = 0;
+
+  for (size_t i = 0; i < this->boardSize; i++) {
+    sum = 0;
+    for (size_t j = 0; j < this->boardSize; j++) {
+      sum += this->board[j][i];
+    }
+    if (sum == (this->boardSize))
+      return 0;
+    if (abs(sum) == (this->boardSize * 2))
+      return 1;
+  }
 
   for (size_t i = 0; i < this->boardSize; i++) {
     sum += this->board[i][i];
   }
   if (sum == (this->boardSize))
     return 0;
-  if (sum == (this->boardSize * 2))
+  if (abs(sum) == (this->boardSize * 2))
     return 1;
 
   sum = 0;
 
-  for (size_t i = this->boardSize; i > -1; i--) {
-    for (size_t j = 0; j < this->boardSize; j++) {
-      sum += this->board[i][j];
-    }
+  for (size_t i = 0; i < this->boardSize; i++) {
+    sum += this->board[i][this->boardSize - 1 - i];
+    if (sum == (this->boardSize))
+      return 0;
+    if (abs(sum) == (this->boardSize * 2))
+      return 1;
   }
-  if (sum == (this->boardSize))
-    return 0;
-  if (sum == (this->boardSize * 2))
-    return 1;
 
   return -1;
 }
@@ -121,7 +131,7 @@ void TicTacToe::Run() {
     if (winner == -1) {
       if (CheckDraw()) {
         puts("Ничья");
-      break;
+        break;
       }
 
       continue;
