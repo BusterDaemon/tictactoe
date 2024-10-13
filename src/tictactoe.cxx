@@ -1,5 +1,4 @@
 #include "tictactoe.hxx"
-#include <wchar.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,9 +24,9 @@ TicTacToe::~TicTacToe() {
 
 bool TicTacToe::Move(int x, int y) {
   if ((x > this->boardSize || x < 0) || (y > this->boardSize || y < 0) ||
-      this->board[x][y] != 0)
+      this->board[y - 1][x - 1] != 0)
     return false;
-  this->board[x][y] = this->curPlayer ? 1 : 2; // 1 - крест, 2 - нуль
+  this->board[y - 1][x - 1] = this->curPlayer ? 1 : -2; // 1 - нуль, -2 - крест
   this->curPlayer = !this->curPlayer;
   return true;
 }
@@ -37,16 +36,18 @@ void TicTacToe::ShowBoard() {
     for (size_t j = 0; j < this->boardSize; j++) {
       switch (this->board[i][j]) {
       case 1:
-        putwc(L'☨', stdout);
+        putc('O', stdout);
         break;
-      case 2:
-        putwc(L'⛧', stdout);
+      case -2:
+        putc('X', stdout);
         break;
       default:
-        putwc(L'☐', stdout);
+        putc('[', stdout);
+        putc(']', stdout);
       }
       putc(' ', stdout);
     }
+    putc('\n', stdout);
   }
   putc('\n', stdout);
 }
@@ -54,35 +55,45 @@ void TicTacToe::ShowBoard() {
 int TicTacToe::CheckWin() {
   int sum = 0;
   for (size_t i = 0; i < this->boardSize; i++) {
+    sum = 0;
     for (size_t j = 0; j < this->boardSize; j++) {
       sum += this->board[i][j];
     }
     if (sum == (this->boardSize))
       return 0;
-    if (sum == (this->boardSize * 2))
+    if (abs(sum) == (this->boardSize * 2))
       return 1;
   }
   sum = 0;
+
+  for (size_t i = 0; i < this->boardSize; i++) {
+    sum = 0;
+    for (size_t j = 0; j < this->boardSize; j++) {
+      sum += this->board[j][i];
+    }
+    if (sum == (this->boardSize))
+      return 0;
+    if (abs(sum) == (this->boardSize * 2))
+      return 1;
+  }
 
   for (size_t i = 0; i < this->boardSize; i++) {
     sum += this->board[i][i];
   }
   if (sum == (this->boardSize))
     return 0;
-  if (sum == (this->boardSize * 2))
+  if (abs(sum) == (this->boardSize * 2))
     return 1;
 
   sum = 0;
 
-  for (size_t i = this->boardSize; i > -1; i--) {
-    for (size_t j = 0; j < this->boardSize; j++) {
-      sum += this->board[i][j];
-    }
+  for (size_t i = 0; i < this->boardSize; i++) {
+    sum += this->board[i][this->boardSize - 1 - i];
+    if (sum == (this->boardSize))
+      return 0;
+    if (abs(sum) == (this->boardSize * 2))
+      return 1;
   }
-  if (sum == (this->boardSize))
-    return 0;
-  if (sum == (this->boardSize * 2))
-    return 1;
 
   return -1;
 }
@@ -101,34 +112,40 @@ void TicTacToe::Run() {
   while (!this->gameOver) {
     printf("Сейчас ходит игрок: ");
     if (this->curPlayer)
-      printf("%c\n", L'☨');
+      printf("%c\n", 'O');
     else
-      printf("%lc\n", L'⛧');
+      printf("%c\n", 'X');
 
     ShowBoard();
 
     while (1) {
-      printf("Введи координату по X (от 0 до %d): ", this->boardSize);
+      printf("Введи координату по X (от 1 до %d): ", this->boardSize);
       fscanf(stdin, "%d", &x);
-      printf("Введи координату по Y (от 0 до %d): ", this->boardSize);
+      printf("Введи координату по Y (от 1 до %d): ", this->boardSize);
       fscanf(stdin, "%d", &y);
       if (this->Move(x, y))
         break;
     }
-  
+
     winner = CheckWin();
     if (winner == -1) {
-      puts("Ничья!");
-      break;
+      if (CheckDraw()) {
+        puts("Ничья");
+        break;
+      }
+
+      continue;
     }
 
     if (winner == 0) {
-      printf("Победил %c", L'☨');
+      printf("Победил %c\n", 'O');
+      ShowBoard();
       break;
     }
 
     if (winner == 1) {
-      printf("Победил %c", L'⛧');
+      printf("Победил %c\n", 'X');
+      ShowBoard();
       break;
     }
   }
