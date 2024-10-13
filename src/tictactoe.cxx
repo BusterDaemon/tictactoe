@@ -96,10 +96,40 @@ bool TicTacToe::CheckDraw() {
 }
 
 void TicTacToe::Run() {
-  for (size_t i = 0; i < this->boardSize; i++) {
-    for (size_t j = 0; j < this->boardSize; j++) {
-      printf("%d ", this->board[i][j]);
+  int x = 0, y = 0;
+  int winner = 0;
+  while (!this->gameOver) {
+    printf("Сейчас ходит игрок: ");
+    if (this->curPlayer)
+      printf("%c\n", L'☨');
+    else
+      printf("%lc\n", L'⛧');
+
+    ShowBoard();
+
+    while (1) {
+      printf("Введи координату по X (от 0 до %d): ", this->boardSize);
+      fscanf(stdin, "%d", &x);
+      printf("Введи координату по Y (от 0 до %d): ", this->boardSize);
+      fscanf(stdin, "%d", &y);
+      if (this->Move(x, y))
+        break;
     }
-    putc('\n', stdout);
+  
+    winner = CheckWin();
+    if (winner == -1) {
+      puts("Ничья!");
+      break;
+    }
+
+    if (winner == 0) {
+      printf("Победил %c", L'☨');
+      break;
+    }
+
+    if (winner == 1) {
+      printf("Победил %c", L'⛧');
+      break;
+    }
   }
 }
