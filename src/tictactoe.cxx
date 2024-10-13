@@ -1,4 +1,5 @@
 #include "tictactoe.hxx"
+#include <wchar.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,6 +30,25 @@ bool TicTacToe::Move(int x, int y) {
   this->board[x][y] = this->curPlayer ? 1 : 2; // 1 - крест, 2 - нуль
   this->curPlayer = !this->curPlayer;
   return true;
+}
+
+void TicTacToe::ShowBoard() {
+  for (size_t i = 0; i < this->boardSize; i++) {
+    for (size_t j = 0; j < this->boardSize; j++) {
+      switch (this->board[i][j]) {
+      case 1:
+        putwc(L'☨', stdout);
+        break;
+      case 2:
+        putwc(L'⛧', stdout);
+        break;
+      default:
+        putwc(L'☐', stdout);
+      }
+      putc(' ', stdout);
+    }
+  }
+  putc('\n', stdout);
 }
 
 int TicTacToe::CheckWin() {
