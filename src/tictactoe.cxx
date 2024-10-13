@@ -1,5 +1,4 @@
 #include "tictactoe.hxx"
-#include <wchar.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,16 +36,18 @@ void TicTacToe::ShowBoard() {
     for (size_t j = 0; j < this->boardSize; j++) {
       switch (this->board[i][j]) {
       case 1:
-        putwc(L'☨', stdout);
+        putc('O', stdout);
         break;
       case 2:
-        putwc(L'⛧', stdout);
+        putc('X', stdout);
         break;
       default:
-        putwc(L'☐', stdout);
+        putc('[', stdout);
+        putc(']', stdout);
       }
       putc(' ', stdout);
     }
+    putc('\n', stdout);
   }
   putc('\n', stdout);
 }
