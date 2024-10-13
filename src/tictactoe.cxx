@@ -77,6 +77,8 @@ int TicTacToe::CheckWin() {
       return 1;
   }
 
+  sum = 0;
+
   for (size_t i = 0; i < this->boardSize; i++) {
     sum += this->board[i][i];
   }
