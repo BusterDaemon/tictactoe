@@ -10,6 +10,7 @@ private:
 public:
     TicTacToe(int bSize);
     ~TicTacToe();
+    bool Move(int x, int y);
     void Run();
 } TicTacToe;
 
