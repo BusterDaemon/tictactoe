@@ -109,9 +109,9 @@ void TicTacToe::Run() {
     ShowBoard();
 
     while (1) {
-      printf("Введи координату по X (от 0 до %d): ", this->boardSize - 1);
+      printf("Введи координату по X (от 1 до %d): ", this->boardSize);
       fscanf(stdin, "%d", &x);
-      printf("Введи координату по Y (от 0 до %d): ", this->boardSize - 1);
+      printf("Введи координату по Y (от 1 до %d): ", this->boardSize);
       fscanf(stdin, "%d", &y);
       if (this->Move(x, y))
         break;
@@ -119,17 +119,23 @@ void TicTacToe::Run() {
 
     winner = CheckWin();
     if (winner == -1) {
-      puts("Ничья!");
+      if (CheckDraw()) {
+        puts("Ничья");
       break;
+      }
+
+      continue;
     }
 
     if (winner == 0) {
-      printf("Победил %c", 'O');
+      printf("Победил %c\n", 'O');
+      ShowBoard();
       break;
     }
 
     if (winner == 1) {
-      printf("Победил %c", 'X');
+      printf("Победил %c\n", 'X');
+      ShowBoard();
       break;
     }
   }
