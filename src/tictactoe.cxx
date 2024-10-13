@@ -102,9 +102,9 @@ void TicTacToe::Run() {
   while (!this->gameOver) {
     printf("Сейчас ходит игрок: ");
     if (this->curPlayer)
-      printf("%c\n", L'☨');
+      printf("%c\n", 'O');
     else
-      printf("%lc\n", L'⛧');
+      printf("%c\n", 'X');
 
     ShowBoard();
 
@@ -116,7 +116,7 @@ void TicTacToe::Run() {
       if (this->Move(x, y))
         break;
     }
-  
+
     winner = CheckWin();
     if (winner == -1) {
       puts("Ничья!");
