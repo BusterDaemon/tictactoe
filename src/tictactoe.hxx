@@ -11,6 +11,7 @@ public:
     TicTacToe(int bSize);
     ~TicTacToe();
     bool Move(int x, int y);
+    bool CheckDraw();
     void Run();
 } TicTacToe;
 
