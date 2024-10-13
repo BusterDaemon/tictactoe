@@ -29,6 +29,42 @@ bool TicTacToe::Move(int x, int y) {
   return true;
 }
 
+int TicTacToe::CheckWin() {
+  int sum = 0;
+  for (size_t i = 0; i < this->boardSize; i++) {
+    for (size_t j = 0; j < this->boardSize; j++) {
+      sum += this->board[i][j];
+    }
+    if (sum == (this->boardSize))
+      return 0;
+    if (sum == (this->boardSize * 2))
+      return 1;
+  }
+  sum = 0;
+
+  for (size_t i = 0; i < this->boardSize; i++) {
+    sum += this->board[i][i];
+  }
+  if (sum == (this->boardSize))
+    return 0;
+  if (sum == (this->boardSize * 2))
+    return 1;
+
+  sum = 0;
+
+  for (size_t i = this->boardSize; i > -1; i--) {
+    for (size_t j = 0; j < this->boardSize; j++) {
+      sum += this->board[i][j];
+    }
+  }
+  if (sum == (this->boardSize))
+    return 0;
+  if (sum == (this->boardSize * 2))
+    return 1;
+
+  return -1;
+}
+
 bool TicTacToe::CheckDraw() {
   for (size_t i = 0; i < this->boardSize; i++)
     for (size_t j = 0; j < this->boardSize; j++)
