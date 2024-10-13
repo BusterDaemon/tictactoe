@@ -4,6 +4,7 @@
 typedef class TicTacToe {
 private:
   bool curPlayer;
+  bool gameOver;
   int **board;
   int boardSize;
 
