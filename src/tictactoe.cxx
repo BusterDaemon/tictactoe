@@ -1,5 +1,4 @@
 #include "tictactoe.hxx"
-#include <cstdlib>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +17,7 @@ TicTacToe::TicTacToe(int bSize) {
 TicTacToe::~TicTacToe() {
   for (size_t i = 0; i < this->boardSize; i++)
     free(this->board[i]);
+  free(this->board);
 }
 
 void TicTacToe::Run() {
