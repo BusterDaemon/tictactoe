@@ -7,6 +7,8 @@
 TicTacToe::TicTacToe(int bSize) {
   this->boardSize = bSize;
   this->board = (int **)malloc(bSize * sizeof(int *));
+  this->curPlayer = true;
+  this->gameOver = false;
 
   for (size_t i = 0; i < this->boardSize; i++) {
     this->board[i] = (int *)malloc(bSize * sizeof(int));
