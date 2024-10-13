@@ -24,9 +24,9 @@ TicTacToe::~TicTacToe() {
 
 bool TicTacToe::Move(int x, int y) {
   if ((x > this->boardSize || x < 0) || (y > this->boardSize || y < 0) ||
-      this->board[x][y] != 0)
+      this->board[y - 1][x - 1] != 0)
     return false;
-  this->board[x][y] = this->curPlayer ? 1 : 2; // 1 - крест, 2 - нуль
+  this->board[y - 1][x - 1] = this->curPlayer ? 1 : -2; // 1 - нуль, -2 - крест
   this->curPlayer = !this->curPlayer;
   return true;
 }
